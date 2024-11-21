@@ -4,7 +4,7 @@ import Preview from "./preview";
 import "./app.css";
 
 const App: React.FC = () => {
-  const [doc, setDoc] = useState("_Start typing markdown...");
+  const [doc, setDoc] = useState("_Start typing markdown..._");
 
   return (
     <div className="app">

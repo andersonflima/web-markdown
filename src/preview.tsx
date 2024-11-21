@@ -18,14 +18,15 @@ const scheme = {
   attributes: {
     ...defaultSchema.attributes,
     code: [...(defaultSchema.attributes?.code || []), "className"],
+    input: [...(defaultSchema.attributes?.input || []), "className"],
   },
 };
 
-const remarkReactComponents: { [key: string]: React.ComponentType<any> } = {
-  code: RemarkCode,
-};
+const Preview: React.FC<Props> = ({ doc }: Props): JSX.Element => {
+  const remarkReactComponents: { [key: string]: React.ComponentType<any> } = {
+    code: RemarkCode,
+  };
 
-const Preview: React.FC<Props> = ({ doc }) => {
   const md = unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -38,7 +39,7 @@ const Preview: React.FC<Props> = ({ doc }) => {
     })
     .processSync(doc).result as React.ReactElement;
 
-  return <div className="preview markdown-body">{md}</div>;
+  return <div className="preview markdown-body">{md}</div>; // Render the markdown content
 };
 
 export default Preview;

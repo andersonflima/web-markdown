@@ -96,10 +96,8 @@ const useCodeMirror = <T extends Element>(
   useEffect(() => {
     if (!refContainer.current) return;
 
-    const processedDoc = preprocessMarkdown(initialDoc);
-
     const startState = EditorState.create({
-      doc: processedDoc,
+      doc: preprocessMarkdown(initialDoc),
       extensions: [
         keymap.of([...defaultKeymap, ...historyKeymap, ...customKeyBindings]),
         lineNumbers(),
@@ -120,6 +118,7 @@ const useCodeMirror = <T extends Element>(
         EditorView.lineWrapping,
         EditorView.updateListener.of((update: ViewUpdate): void => {
           if (update.docChanged && onChange) {
+            // console.log(update.docChanged);
             onChange(update.state);
           }
         }),
@@ -132,7 +131,7 @@ const useCodeMirror = <T extends Element>(
     });
 
     setEditorView(view);
-  }, [refContainer]);
+  }, [refContainer, onChange]);
 
   return [refContainer, editorView];
 };
